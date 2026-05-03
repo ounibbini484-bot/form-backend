@@ -1,16 +1,16 @@
 import express from 'express'
-import addUser from '../controller/userController.js'
+import { create, getAllUsers } from '../controller/userController.js'
 
 const router = express.Router()
 
 //Create
 router.post('/', (req, res) => {
-    addUser(req, res)
+    create(req, res)
 })
 
 //Read
-router.get('/', (req, res) => {
-    res.json({ message: "User created successfully" })
+router.get('/', (req, res) => { 
+    getAllUsers(req, res)
 })
 
 //Update

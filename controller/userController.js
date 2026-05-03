@@ -1,6 +1,6 @@
 import FormUser from "../model/userModel.js";
 
-const addUser = async (req, res) => {
+export const create = async (req, res) => {
     try{
         const {name, email, phone, address, role, status} = req.body;
         const user = await FormUser.create({name, email, phone, address, role, status});
@@ -10,4 +10,11 @@ const addUser = async (req, res) => {
     }
 }
 
-export default addUser
+export const getAllUsers = async (req, res) => {
+    try{
+        const users = await FormUser.find();
+        res.status(200).json({ message: "Users fetched successfully", users })
+    }catch(error){
+        res.status(500).json({ message: "Error fetching users", error })
+    }
+}
