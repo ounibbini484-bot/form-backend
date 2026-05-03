@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, getAllUsers } from '../controller/userController.js'
+import { create, getAllUsers, getUserById } from '../controller/userController.js'
 
 const router = express.Router()
 
@@ -11,6 +11,10 @@ router.post('/', (req, res) => {
 //Read
 router.get('/', (req, res) => { 
     getAllUsers(req, res)
+})
+
+router.get('/:id', (req, res) => {
+    getUserById(req, res)
 })
 
 //Update
