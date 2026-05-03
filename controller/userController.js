@@ -58,3 +58,61 @@ export const deleteUser = async(req, res) =>{
         res.status(500).json({ message: "Error deleting user", error })
     }
 }
+
+// export const searchUserByNameOrEmail = async(req, res) => {
+//     try{
+//         const {name, email} = req.body;
+//         const users = await FormUser.find({$or: [{name: name}, {email: email}]});
+//         if(users.length === 0){
+//             return res.status(404).json({ message: "User not found" })
+//         }
+//         res.status(200).json({ message: "Users fetched successfully", users })
+//     }catch(error){
+//         res.status(500).json({ message: "Error fetching users", error })
+//     }
+// }
+
+export const searchUserByNameOrEmail = async (req, res) => {
+    try {
+        const { name, email } = req.query;
+
+        // Build dynamic query
+        const conditions = [];
+
+        if (name) {
+            conditions.push({ name: { $regex: name, $options: 'i' } });
+        }
+
+        if (email) {
+            conditions.push({ email: { $regex: email, $options: 'i' } });
+        }
+
+        // If no query params provided
+        if (conditions.length === 0) {
+            return res.status(400).json({
+                message: "Please provide name or email to search"
+            });
+        }
+
+        const users = await FormUser.find({
+            $or: conditions
+        });
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Users fetched successfully",
+            users
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching users",
+            error
+        });
+    }
+};

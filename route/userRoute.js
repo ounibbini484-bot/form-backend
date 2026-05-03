@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, getAllUsers, getUserById, updateUser, deleteUser } from '../controller/userController.js'
+import { create, getAllUsers, getUserById, updateUser, deleteUser, searchUserByNameOrEmail } from '../controller/userController.js'
 
 const router = express.Router()
 
@@ -13,9 +13,15 @@ router.get('/', (req, res) => {
     getAllUsers(req, res)
 })
 
+router.get('/search', (req, res) => {
+    searchUserByNameOrEmail(req, res)
+})
+
+
 router.get('/:id', (req, res) => {
     getUserById(req, res)
 })
+
 
 //Update
 router.put('/:id', (req, res) => {
