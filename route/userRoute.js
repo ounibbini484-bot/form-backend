@@ -1,5 +1,5 @@
 import express from 'express'
-import { create, getAllUsers, getUserById, updateUser  } from '../controller/userController.js'
+import { create, getAllUsers, getUserById, updateUser, deleteUser } from '../controller/userController.js'
 
 const router = express.Router()
 
@@ -19,13 +19,12 @@ router.get('/:id', (req, res) => {
 
 //Update
 router.put('/:id', (req, res) => {
-    // res.json({ message: "User updated successfully" })
     updateUser(req, res)
 })
 
 //Delete
 router.delete('/:id', (req, res) => {
-    res.json({ message: "User deleted successfully" })
+    deleteUser(req, res)
 })
 
 export default router
